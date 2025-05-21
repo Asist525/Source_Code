@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+spec:
+  type: LoadBalancer 
+  selector:
+    app: hello-world
+  loadBalancerIP: 172.18.0.240 # MetalLB에서 할당할 외부 IP
+  ports:
+    - protocol: TCP
+      port: 80          # 외부 네트워크와 통신할 서비스 포트
+      targetPort: 80  # 파드 내부 컨테이너 (엔진엑스) 포트
+
