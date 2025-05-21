@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: django
+          image: myproject:latest # 직접 만든 이미지
+          imagePullPolicy: IfNotPresent  # 로컬에서 이미지를 찾고, 없으면 원격에서 pull
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://postgres:mysecretpassword@db-service:5432/postgres"
+        - name: logger
+          image: busybox
+          command: ["sh", "-c", "while true; do echo 'Logging backend...'; sleep 30; done"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
