@@ -1,15 +1,13 @@
-class Vector:
-    def __init__(self, x, y):
-        self.__x = x
-        self.__y = y
-        
-    def __add__(self, other):
-        return Vector(self.__x + other.x, self.__y + other.y)
-    def __sub__(self, other):
-        return Vector(self.__x - other.x, self.__y - other.y)
-    def __eq__(self, other):
-        return self.__x == other.x and self.__y == other.y
-    def __str__(self):
-        return (f"{self.__x}, {self.__y}")
+class Account:
+    def __init__(self, balance=100):
+        self.__balance = balance
+    def withdrow(self, balance):
+        print(f"통장에서 {balance}가 출금되었음")
+        return self.__balance - balance
+    def despoit(self, balance):
+        print(f"통장에 {balance}가 입금되었음")
+        return self.__balance + balance
 
-a = Vector(0, 1)
+money = Account()
+money.withdrow(100)
+money.despoit(10)
