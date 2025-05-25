@@ -1,9 +1,6 @@
 import random
 
 class Card:
-    '''
-    
-    '''
     def __init__(self, suit, value):
         
         self.suit = suit
@@ -23,7 +20,7 @@ class Card:
         
 class Deck:
     def __init__(self):
-        self.cards = [] # 52장의 카드가 존재
+        self.cards = [] 
         suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
         values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
         
@@ -58,13 +55,7 @@ class Game:
         2. 리턴되는 값은 Hands에서 받음
         '''
         return self.deck.deal()
-        
-    
-    def reset(self):
-        self.deck = Deck()
-        self.deck.shuffle()
 
-        
         
 class Hand:
     '''
@@ -94,14 +85,6 @@ class Hand:
             total -= 10
             A -= 1
         return total
-    
-    # def __repr__(self):
-    #     if len(self.dealer) >= 2:
-    #         dealer_str = ' 빈칸 ' + str(self.dealer[1])
-    #     else:
-    #         dealer_str = ', '.join(str(card) for card in self.dealer)
-    #     player_str = ', '.join(str(card) for card in self.player)
-    #     return f"딜러의 카드: [{dealer_str}]\nPlayer: [{player_str}]"
 
 class Player:
     '''
@@ -134,7 +117,7 @@ class Dealer:
             print(f"딜러가 카드를 뽑았습니다: {card}")
             print("딜러 현재 점수:", self.hand.score('dealer'))
 
-        print("\n💤 딜러는 스탠드합니다.")
+        print("\n딜러는 스탠드합니다.")
         print("딜러 최종 카드:", ', '.join(str(c) for c in self.hand.dealer))
         print("딜러 최종 점수:", self.hand.score('dealer'))
 
@@ -208,11 +191,13 @@ def main():
             dealer_score = player.hand.score('dealer')
 
             print("\n[결과]")
-            if player_score > 21:
+            if player_score > 21:   
                 print("버스트! 패배")
+        
             elif dealer_score > 21 or player_score > dealer_score:
-                print("블랙잭! 이겼습니다!")
+                print("이겼습니다!")
                 cib += betting * 2
+            
             elif player_score < dealer_score:
                 print("딜러 승리!")
                 # 칩 차감은 이미 됐음
