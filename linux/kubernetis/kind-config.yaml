@@ -1,26 +1,15 @@
+# kind-config.yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
+name: minio-cluster
 nodes:
   - role: control-plane
-    extraMounts:
-      - hostPath: /mnt/data/postgres
-        containerPath: /mnt/data/postgres
-    labels:
-      ingress-ready: "true"
-    kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: ingress-ready=true
-          taints: []  # Control-plane의 taint 제거
-  
+    extraPortMappings:
+      - containerPort: 30000
+        hostPort: 9000
+      - containerPort: 30001
+        hostPort: 9001
   - role: worker
-    labels:
-      ingress-ready: "true"
   - role: worker
-    labels:
-      ingress-ready: "true"
-networking:
-  disableDefaultCNI: true
-  podSubnet: "192.168.0.0/16"
+  - role: worker
+  - role: worker
